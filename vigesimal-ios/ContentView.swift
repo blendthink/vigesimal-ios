@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import shared
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding(14)
+        let test = VigesimalConverter.init().toDecimal(vigesimal: "jjj")
+        
+        Text(test.toPlainString())
+            .padding()
     }
 }
 
