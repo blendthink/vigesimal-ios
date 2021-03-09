@@ -12,6 +12,7 @@ struct ContentView: View {
     
     @State private var vigesimalText = ""
     @State private var decimalText = ""
+    @State private var showAlert = false
     
     var body: some View {
         TextField("Enter vigesimal", text: $vigesimalText)
@@ -24,10 +25,14 @@ struct ContentView: View {
                 decimalText = decimal.toPlainString()
             } catch {
                 decimalText = ""
+                showAlert = true
             }
         }){
             Text("CONVERT")
         }.padding()
+        .alert(isPresented: $showAlert, content: {
+            Alert(title: Text("Contains undefined characters."))
+        })
         
         Text(decimalText)
             .padding()
