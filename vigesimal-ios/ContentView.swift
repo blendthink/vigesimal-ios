@@ -14,23 +14,24 @@ struct ContentView: View {
     @State private var decimalText = ""
     @State private var showAlert = false
     
+    func convertVigesimalToDecimal() {
+        do {
+            let decimal = try VigesimalConverter.init().toDecimal(vigesimal: vigesimalText)
+            decimalText = decimal.toPlainString()
+        } catch {
+            decimalText = ""
+            showAlert = true
+        }
+    }
+    
     var body: some View {
         TextField("Enter vigesimal", text: $vigesimalText)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding()
         
-        Button(action: {
-            do {
-                let decimal = try VigesimalConverter.init().toDecimal(vigesimal: vigesimalText)
-                decimalText = decimal.toPlainString()
-            } catch {
-                decimalText = ""
-                showAlert = true
-            }
-        }){
-            Text("CONVERT")
-        }.padding()
-        .alert(isPresented: $showAlert, content: {
+        Button("CONVERT") {
+            convertVigesimalToDecimal()
+        }.padding().alert(isPresented: $showAlert, content: {
             Alert(title: Text("Contains undefined characters."))
         })
         
