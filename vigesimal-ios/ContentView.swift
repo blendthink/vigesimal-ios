@@ -9,10 +9,27 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
+    
+    @State private var vigesimalText = ""
+    @State private var decimalText = ""
+    
     var body: some View {
-        let test = VigesimalConverter.init().toDecimal(vigesimal: "jjj")
+        TextField("Enter vigesimal", text: $vigesimalText)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding()
         
-        Text(test.toPlainString())
+        Button(action: {
+            do {
+                let decimal = try VigesimalConverter.init().toDecimal(vigesimal: vigesimalText)
+                decimalText = decimal.toPlainString()
+            } catch {
+                decimalText = ""
+            }
+        }){
+            Text("CONVERT")
+        }.padding()
+        
+        Text(decimalText)
             .padding()
     }
 }
